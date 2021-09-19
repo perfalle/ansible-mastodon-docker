@@ -91,6 +91,12 @@
     args:
       chdir: "{{ mastodon_path }}"
 
+  # Need this step for the static pages step (cf. https://github.com/rails/webpacker/issues/2674)
+  - name: Compile Webpacker
+    shell: docker-compose run --rm web rails webpacker:compile
+    args:
+      chdir: "{{ mastodon_path }}"
+      
   # Assets precompile does not seem to generate everything unless this is run first, confusingly.
   - name: Generate static pages
     shell: docker-compose run --rm web rake assets:generate_static_pages
