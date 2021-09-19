@@ -35,13 +35,13 @@
       group: mastodon
   
   - name: Generate secret key
-    shell: docker-compose run --rm web rake secret
+    shell: docker-compose run --rm web rake secret | tail -1 
     args:
       chdir: "{{ mastodon_path }}"
     register: secret_key
 
   - name: Generate otp key
-    shell: docker-compose run --rm web rake secret
+    shell: docker-compose run --rm web rake secret | tail -1 
     args:
       chdir: "{{ mastodon_path }}"
     register: otp_key
