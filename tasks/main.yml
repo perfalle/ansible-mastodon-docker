@@ -1,5 +1,3 @@
 ---
 - include_tasks: prereqs.yml
 - include_tasks: mastodon.yml
-- include_tasks: nginx.yml
-- include_tasks: cron.yml

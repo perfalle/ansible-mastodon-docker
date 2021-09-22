@@ -1,9 +1,10 @@
 ---
 - name: Clone mastodon repo if not cloned
   git: 
-    repo: "https://github.com/mastodon/mastodon.git" #"https://github.com/tootsuite/mastodon.git"
+    repo: "https://github.com/mastodon/mastodon.git"
     dest: "{{ mastodon_path }}"
-    update: no
+    version: "{{ mastodon_version }}"
+    update: yes
 
 # Not using file module because recursive chown with it is slow
 - name: Chown everything to mastodon
