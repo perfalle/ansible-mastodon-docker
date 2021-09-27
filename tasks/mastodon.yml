@@ -3,8 +3,8 @@
   git: 
     repo: "https://github.com/mastodon/mastodon.git"
     dest: "{{ mastodon_path }}"
-    version: "{{ mastodon_version }}"
-    update: yes
+    version: "{{ app_vars.mastodon_version }}"
+    update: no
 
 # Not using file module because recursive chown with it is slow
 - name: Chown everything to mastodon
@@ -109,6 +109,12 @@
     args:
       chdir: "{{ mastodon_path }}"
   when: envfile.stat.exists == False
+
+  
+- name: DB migrate
+  shell: docker-compose run --rm web rake db:migrate
+  args:
+    chdir: "{{ mastodon_path }}"
 
 - name: Start mastodon
   shell: docker-compose up -d

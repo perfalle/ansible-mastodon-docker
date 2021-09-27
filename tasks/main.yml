@@ -1,3 +1,6 @@
 ---
+- include_vars: vars.yml
+- include_tasks: copy_proxy_config.yml
+- include_tasks: copy_backup_script.yml
 - include_tasks: prereqs.yml
 - include_tasks: mastodon.yml

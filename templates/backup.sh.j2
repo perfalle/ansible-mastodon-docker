@@ -1,5 +1,22 @@
 #!/bin/bash
-DATE=$(date +%F)
-mkdir -p /backups/$DATE
-tar cvzf mastodon.tar.gz {{ mastodon_path }} >> /backups/$DATE/mastodon-backup.log
-docker exec -it mastodon_db_1 pg_dumpall -c -Upostgres | gzip > /backups/$DATE/pg_dumpall.sql.gz
+
+echo mastodon work directory
+cd {{ mastodon_path }}
+
+
+echo wipe old backup
+
+docker-compose exec -T db rm -rf /tmp/dump/* /tmp/dump/.[a-zA-Z0-9]*
+rm -rf  {{ postgres_dump_path }}/* {{ postgres_dump_path }}/.[a-zA-Z0-9]*
+rm -rf  {{ backup_path }}/* {{ backup_path }}/.[a-zA-Z0-9]*
+
+
+echo generate new backup
+
+docker-compose exec -T db /bin/bash -c "pg_dump --username postgres > /tmp/dump/pg.dump"
+docker-compose exec -T db cp /etc/hostname /tmp/dump/hostname.dump
+
+
+echo move to backup path
+
+mv {{ postgres_dump_path }}/* {{ backup_path }}

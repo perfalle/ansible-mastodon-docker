@@ -1,0 +1,6 @@
+---
+mastodon_path: "{{ static_path }}/mastodon"
+postgres_data_path: "{{ dynamic_path }}/postgres"
+postgres_dump_path: "{{ dynamic_path }}/postgres.dump.d"
+redis_data_path: "{{ dynamic_path }}/redis"
+mastodon_domain: "{{ domain }}"

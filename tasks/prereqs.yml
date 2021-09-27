@@ -34,9 +34,16 @@
     path: "{{ mastodon_path }}"
   when: mastodon_path is defined
 
+- name: Create directory for postgres dump volume
+  file:
+    state: directory
+    path: "{{ postgres_dump_path }}"
+
 - name: Check necessary vars
   fail:
     msg: "{{ item }} is not defined"
   when: item is not defined
   loop:
     - mastodon_domain
+
+    

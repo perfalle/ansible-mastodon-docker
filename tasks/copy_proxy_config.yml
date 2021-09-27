@@ -1,0 +1,6 @@
+---
+- name: copy proxy config
+  template:
+    src: proxy.conf.j2
+    dest: "{{ proxy_config_path }}"
+  become: yes
